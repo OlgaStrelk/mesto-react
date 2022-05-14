@@ -1,48 +1,16 @@
-import "./index.css";
+import React from "react";
+import "../index.css";
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
 
 function App() {
   return (
     <div className="App page">
       <div className="page__container">
-        <header className="header">
-          <div className="header__logo"></div>
-        </header>
-
-        <main className="content">
-          <section className="profile">
-            <div className="profile__name">
-              <h1 className="profile__title"></h1>
-            </div>
-
-            <button
-              className="profile__button profile__button_type_edit-description"
-              type="button"
-              aria-label="Редактировать профиль"
-            ></button>
-
-            <p className="profile__description"></p>
-
-            <div className="profile__user-pic">
-              <button
-                className="profile__button profile__button_type_edit-user-pic"
-                type="button"
-                aria-label="Редактировать аватар"
-              ></button>
-            </div>
-
-            <button
-              className="profile__button profile__button_type_add-card"
-              type="button"
-              aria-label="Добавить новое место"
-            ></button>
-          </section>
-
-          <section className="cards"></section>
-        </main>
-
-        <footer className="footer">
-          <p className="footer__copyright">&copy; 2021 Mesto Russia</p>
-        </footer>
+        <Header />
+        <Main />
+        <Footer />
 
         <div className="popup popup_type_profile">
           <div className="popup__container">
