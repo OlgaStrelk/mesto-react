@@ -1,6 +1,18 @@
 import React, { useState } from "react";
+import PopupWithForm from "./PopupWithForm";
 
 function Main() {
+  let [isModalOpen, setModalIsOpen] = useState(false);
+  function handleEditAvatarClick() {
+    setModalIsOpen(true);
+  }
+
+  // const handleEditProfileClick = () => {
+
+  // }
+  // const handleAddPlaceClick = () => {
+
+  // }
   return (
     <main className="content">
       <section className="profile">
@@ -12,6 +24,7 @@ function Main() {
           className="profile__button profile__button_type_edit-description"
           type="button"
           aria-label="Редактировать профиль"
+          onClick={handleEditAvatarClick}
         ></button>
 
         <p className="profile__description"></p>
@@ -32,6 +45,8 @@ function Main() {
       </section>
 
       <section className="cards"></section>
+
+      {isModalOpen && <PopupWithForm />}
     </main>
   );
 }
