@@ -1,21 +1,10 @@
 import React, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function Main() {
-  let [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
-  let [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
-  let [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
-  let [isMouseEnterButton, setMouseEnterButton] = useState(false);
-  const handleEditProfileClick = () => {
-    setEditProfilePopupOpen(true);
-  };
-  const handleEditAvatarClick = () => {
-    setEditAvatarPopupOpen(true);
-  };
+function Main(props) {
+  const { onClose, onEditeProfile, onEditAvatar, onAddPlace, isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen } = props;
 
-  const handleAddPlaceClick = () => {
-    setAddPlacePopupOpen(true);
-  };
+  let [isMouseEnterButton, setMouseEnterButton] = useState(false);
 
   const handleMouseEnter = () => {
     setMouseEnterButton(true);
@@ -36,25 +25,31 @@ function Main() {
           className="profile__button profile__button_type_edit-description"
           type="button"
           aria-label="Редактировать профиль"
-          onClick={handleEditProfileClick}
+          onClick={onEditeProfile}
         ></button>
 
         <p className="profile__description"></p>
 
-        <div className="profile__user-pic" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          {isMouseEnterButton && <button
-            className="profile__button profile__button_type_edit-user-pic"
-            type="button"
-            aria-label="Редактировать аватар"
-            onClick={handleEditAvatarClick}
-          ></button>}
+        <div
+          className="profile__user-pic"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {isMouseEnterButton && (
+            <button
+              className="profile__button profile__button_type_edit-user-pic"
+              type="button"
+              aria-label="Редактировать аватар"
+              onClick={onEditAvatar}
+            ></button>
+          )}
         </div>
 
         <button
           className="profile__button profile__button_type_add-card"
           type="button"
           aria-label="Добавить новое место"
-          onClick={handleAddPlaceClick}
+          onClick={onAddPlace}
         ></button>
       </section>
 
@@ -65,6 +60,7 @@ function Main() {
           title="Редактировать профиль"
           name="profile"
           isOpen={isEditProfilePopupOpen}
+          onClose={onClose}
         >
           <input
             required
@@ -100,6 +96,7 @@ function Main() {
           title="Новое место"
           name="add-card"
           isOpen={isAddPlacePopupOpen}
+          onClose={onClose}
         >
           <input
             required
@@ -131,6 +128,7 @@ function Main() {
           title="Обновить аватар"
           name="edit-user-pic"
           isOpen={isEditAvatarPopupOpen}
+          onClose={onClose}
         >
           <input
             required
