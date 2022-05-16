@@ -1,14 +1,10 @@
 import React from "react";
 
 const PopupWithForm = (props) => {
-  const { title, name, isEditProfilePopupOpen, children } = props;
+  const { title, name, isOpen, onClose, children } = props;
   return (
     <>
-      <div
-        className={`popup poup_type_${name} ${
-          isEditProfilePopupOpen && "popup_is-opened"
-        }`}
-      >
+      <div className={`popup poup_type_${name} ${isOpen && "popup_is-opened"}`}>
         <div className="popup__container">
           <button
             type="button"

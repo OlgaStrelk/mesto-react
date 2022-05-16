@@ -3,17 +3,28 @@ import PopupWithForm from "./PopupWithForm";
 
 function Main() {
   let [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
-
-  function handleEditAvatarClick() {
+  let [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  let [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  let [isMouseEnterButton, setMouseEnterButton] = useState(false);
+  const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
-  }
+  };
+  const handleEditAvatarClick = () => {
+    setEditAvatarPopupOpen(true);
+  };
 
-  // const handleEditProfileClick = () => {
+  const handleAddPlaceClick = () => {
+    setAddPlacePopupOpen(true);
+  };
 
-  // }
-  // const handleAddPlaceClick = () => {
+  const handleMouseEnter = () => {
+    setMouseEnterButton(true);
+  };
 
-  // }
+  const handleMouseLeave = () => {
+    setMouseEnterButton(false);
+  };
+
   return (
     <main className="content">
       <section className="profile">
@@ -25,61 +36,114 @@ function Main() {
           className="profile__button profile__button_type_edit-description"
           type="button"
           aria-label="Редактировать профиль"
-          onClick={handleEditAvatarClick}
+          onClick={handleEditProfileClick}
         ></button>
 
         <p className="profile__description"></p>
 
-        <div className="profile__user-pic">
-          <button
+        <div className="profile__user-pic" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          {isMouseEnterButton && <button
             className="profile__button profile__button_type_edit-user-pic"
             type="button"
             aria-label="Редактировать аватар"
-          ></button>
+            onClick={handleEditAvatarClick}
+          ></button>}
         </div>
 
         <button
           className="profile__button profile__button_type_add-card"
           type="button"
           aria-label="Добавить новое место"
+          onClick={handleAddPlaceClick}
         ></button>
       </section>
 
       <section className="cards"></section>
 
-      {isEditProfilePopupOpen && <PopupWithForm
-      title="Редактировать профиль"
-      name="profile"
-      isEditProfilePopupOpen>
-<input
-  required
-  minLength="2"
-  maxLength="40"
-  type="text"
-  autoComplete="off"
-  name="name"
-  id="form-field-name"
-  className="popup__field popup__field_type_name"
-  placeholder="Ваше имя"
-/>
+      {isEditProfilePopupOpen && (
+        <PopupWithForm
+          title="Редактировать профиль"
+          name="profile"
+          isOpen={isEditProfilePopupOpen}
+        >
+          <input
+            required
+            minLength="2"
+            maxLength="40"
+            type="text"
+            autoComplete="off"
+            name="name"
+            id="form-field-name"
+            className="popup__field popup__field_type_name"
+            placeholder="Ваше имя"
+          />
 
-<span id="form-field-name-error" className="popup__error"></span>
+          <span id="form-field-name-error" className="popup__error"></span>
 
-<input
-  required
-  minLength="2"
-  maxLength="200"
-  type="text"
-  autoComplete="off"
-  name="occupation"
-  id="form-field-job"
-  className="popup__field popup__field_type_job"
-  placeholder="Чем вы занимаетесь?"
-/>
+          <input
+            required
+            minLength="2"
+            maxLength="200"
+            type="text"
+            autoComplete="off"
+            name="occupation"
+            id="form-field-job"
+            className="popup__field popup__field_type_job"
+            placeholder="Чем вы занимаетесь?"
+          />
 
-<span id="form-field-job-error" className="popup__error"></span>
+          <span id="form-field-job-error" className="popup__error"></span>
+        </PopupWithForm>
+      )}
+      {isAddPlacePopupOpen && (
+        <PopupWithForm
+          title="Новое место"
+          name="add-card"
+          isOpen={isAddPlacePopupOpen}
+        >
+          <input
+            required
+            minLength="2"
+            maxLength="30"
+            type="text"
+            name="place"
+            className="popup__field"
+            id="form-field-place"
+            placeholder="Название"
+          />
 
-</PopupWithForm>}
+          <span id="form-field-place-error" className="popup__error"></span>
+
+          <input
+            required
+            type="url"
+            name="link"
+            className="popup__field"
+            id="form-field-link"
+            placeholder="Ссылка на картинку"
+          />
+
+          <span id="form-field-link-error" className="popup__error"></span>
+        </PopupWithForm>
+      )}
+      {isEditAvatarPopupOpen && (
+        <PopupWithForm
+          title="Обновить аватар"
+          name="edit-user-pic"
+          isOpen={isEditAvatarPopupOpen}
+        >
+          <input
+            required
+            type="url"
+            name="link"
+            className="popup__field"
+            id="form-field-user-pic"
+            placeholder="Ссылка на аватар"
+          />
+
+          <span id="form-field-user-pic-error" className="popup__error"></span>
+        </PopupWithForm>
+      )}
     </main>
   );
 }
