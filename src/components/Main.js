@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
+import Card from "./Card";
 import { api } from "../utils/API";
 
 function Main(props) {
@@ -14,18 +15,18 @@ function Main(props) {
   } = props;
 
   let [isMouseEnterButton, setMouseEnterButton] = useState(false);
-  let [state, setState] = useState({
+  let [stateProfile, setStateProfile] = useState({
     userName: "",
     userDesciption: "",
     userAvatar: "",
   });
+  let [cards, setCards] = useState([]);
 
   React.useEffect(() => {
     api
       .getProfile()
       .then((data) => {
-        console.log(data);
-        setState({
+        setStateProfile({
           userName: data.name,
           userDesciption: data.about,
           userAvatar: data.avatar,
@@ -35,6 +36,17 @@ function Main(props) {
         console.log(err);
       });
   }, []);
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      }, []);
+  });
 
   const handleMouseEnter = () => {
     setMouseEnterButton(true);
@@ -48,7 +60,7 @@ function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__name">
-          <h1 className="profile__title">{state.userName}</h1>
+          <h1 className="profile__title">{stateProfile.userName}</h1>
         </div>
 
         <button
@@ -58,13 +70,13 @@ function Main(props) {
           onClick={onEditeProfile}
         ></button>
 
-        <p className="profile__description">{state.userDescription}</p>
+        <p className="profile__description">{stateProfile.userDescription}</p>
 
         <div
           className="profile__user-pic"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          style={{ backgroundImage: `url(${state.userAvatar})` }}
+          style={{ backgroundImage: `url(${stateProfile.userAvatar})` }}
         >
           {isMouseEnterButton && (
             <button
@@ -182,122 +194,13 @@ function Main(props) {
           </button>
         </PopupWithForm>
       )}
+      <section className="cards">
+        {cards.map((card) => (
+          <Card key={card._id} card={card} />
+        ))}
+      </section>
     </main>
   );
 }
 
 export default Main;
-
-/*<div className="popup popup_type_add-card">
-        <div className="popup__container">
-          <button
-            type="button"
-            className="popup__close popup__close_type_add-card"
-            aria-label="Закрыть"
-          ></button>
-
-          <h2 className="popup__title">Новое место</h2>
-
-          <form
-            name="edit-form"
-            className="popup__form popup__form_type_add-card"
-            noValidate
-          >
-            <input
-              required
-              minLength="2"
-              maxLength="30"
-              type="text"
-              name="place"
-              className="popup__field"
-              id="form-field-place"
-              placeholder="Название"
-            />
-
-            <span id="form-field-place-error" className="popup__error"></span>
-
-            <input
-              required
-              type="url"
-              name="link"
-              className="popup__field"
-              id="form-field-link"
-              placeholder="Ссылка на картинку"
-            />
-
-            <span id="form-field-link-error" className="popup__error"></span>
-
-            <button
-              type="submit"
-              className="popup__submit"
-              aria-label="Создать"
-            >
-              Создать
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="popup popup_type_delete-card">
-        <div className="popup__container">
-          <button
-            type="button"
-            className="popup__close"
-            aria-label="Закрыть"
-          ></button>
-
-          <h2 className="popup__title">Вы уверены?</h2>
-          <form
-            name="delete-form"
-            className="popup__form popup__form_type_delete-card"
-            noValidate
-          >
-            <button
-              type="submit"
-              className="popup__submit"
-              aria-label="Создать"
-            >
-              Да
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div className="popup popup_type_edit-user-pic">
-        <div className="popup__container">
-          <button
-            type="button"
-            className="popup__close"
-            aria-label="Закрыть"
-          ></button>
-
-          <h2 className="popup__title">Обновить аватар</h2>
-          <form
-            name="delete-form"
-            className="popup__form"
-            noValidate
-          >
-            <input
-              required
-              type="url"
-              name="link"
-              className="popup__field"
-              id="form-field-user-pic"
-              placeholder="Ссылка на аватар"
-            />
-
-            <span
-              id="form-field-user-pic-error"
-              className="popup__error"
-            ></span>
-
-            <button
-              type="submit"
-              className="popup__submit"
-              aria-label="Создать"
-            >
-              Сохранить
-            </button>
-          </form>
-        </div>
-      </div>*/

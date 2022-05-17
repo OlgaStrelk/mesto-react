@@ -57,24 +57,7 @@ function App() {
         </div>
       </div>
 
-      <template id="card-template">
-        <div className="cards__item">
-          <img src="#" alt="" className="cards__image" />
-
-          <button type="button" className="cards__remove"></button>
-
-          <div className="cards__caption">
-            <h2 className="cards__title"></h2>
-
-            <button
-              className="cards__like"
-              type="button"
-              aria-label="Нравится"
-            ></button>
-            <span className="cards__like-count"></span>
-          </div>
-        </div>
-      </template>
+      
     </div>
   );
 }
