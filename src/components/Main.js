@@ -16,7 +16,7 @@ function Main(props) {
     onCardClick,
     selectedCard,
   } = props;
-  let [isMouseEnterButton, setMouseEnterButton] = useState(false);
+  const [isMouseEnterButton, setMouseEnterButton] = useState(false);
   let [stateProfile, setStateProfile] = useState({
     userName: "",
     userDesciption: "",
