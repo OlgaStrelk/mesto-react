@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 import Card from "./Card";
 import { api } from "../utils/API";
+import ImagePopup from "./ImagePopup";
 
 function Main(props) {
   const {
@@ -12,8 +13,9 @@ function Main(props) {
     isEditProfilePopupOpen,
     isAddPlacePopupOpen,
     isEditAvatarPopupOpen,
+    onCardClick,
+    selectedCard,
   } = props;
-
   let [isMouseEnterButton, setMouseEnterButton] = useState(false);
   let [stateProfile, setStateProfile] = useState({
     userName: "",
@@ -132,7 +134,11 @@ function Main(props) {
           />
 
           <span id="form-field-job-error" className="popup__error"></span>
-          <button type="submit" class="popup__submit" aria-label="Сохранить">
+          <button
+            type="submit"
+            className="popup__submit"
+            aria-label="Сохранить"
+          >
             Сохранить
           </button>
         </PopupWithForm>
@@ -194,9 +200,10 @@ function Main(props) {
           </button>
         </PopupWithForm>
       )}
+      <ImagePopup selectedCard={selectedCard} onClose={onClose} />
       <section className="cards">
         {cards.map((card) => (
-          <Card key={card._id} card={card} />
+          <Card key={card._id} card={card} selectedCard={selectedCard} onCardClick={onCardClick} />
         ))}
       </section>
     </main>

@@ -8,6 +8,7 @@ function App() {
   let [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   let [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   let [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  let [selectedCard, handleCardClick] = useState([" ", false]);
 
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
@@ -24,6 +25,7 @@ function App() {
     setEditProfilePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setAddPlacePopupOpen(false);
+    handleCardClick([" ", false]);
   };
 
   return (
@@ -39,25 +41,12 @@ function App() {
             onEditeProfile={handleEditProfileClick}
             onEditAvatar={handleEditAvatarClick}
             onAddPlace={handleAddPlaceClick}
+            onCardClick={handleCardClick}
+            selectedCard={selectedCard}
           />
           <Footer />
-          <div className="popup popup_type_big-image">
-            <div className="popup__container popup__container_type_img">
-              <button
-                type="button"
-                className="popup__close popup__close_type_big-image"
-                aria-label="Закрыть"
-              ></button>
-
-              <img className="popup__image" src="#" />
-
-              <p className="popup__caption"></p>
-            </div>
-          </div>
         </div>
       </div>
-
-      
     </div>
   );
 }
