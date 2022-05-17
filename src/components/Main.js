@@ -25,11 +25,10 @@ function Main(props) {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
+    api.getInitialCards().then((data) => {
+      setCards(data);
+    });
     api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
       .getProfile()
       .then((data) => {
         setStateProfile({
@@ -196,7 +195,12 @@ function Main(props) {
       <ImagePopup selectedCard={selectedCard} onClose={onClose} />
       <section className="cards">
         {cards.map((card) => (
-          <Card key={card._id} card={card} selectedCard={selectedCard} onCardClick={onCardClick} />
+          <Card
+            key={card._id}
+            card={card}
+            selectedCard={selectedCard}
+            onCardClick={onCardClick}
+          />
         ))}
       </section>
     </main>
