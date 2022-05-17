@@ -24,8 +24,12 @@ function Main(props) {
   });
   const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     api
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
       .getProfile()
       .then((data) => {
         setStateProfile({
@@ -38,17 +42,6 @@ function Main(props) {
         console.log(err);
       });
   }, []);
-
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      }, []);
-  });
 
   const handleMouseEnter = () => {
     setMouseEnterButton(true);
