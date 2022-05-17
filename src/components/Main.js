@@ -1,10 +1,40 @@
 import React, { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
+import { api } from "../utils/API";
 
 function Main(props) {
-  const { onClose, onEditeProfile, onEditAvatar, onAddPlace, isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen } = props;
+  const {
+    onClose,
+    onEditeProfile,
+    onEditAvatar,
+    onAddPlace,
+    isEditProfilePopupOpen,
+    isAddPlacePopupOpen,
+    isEditAvatarPopupOpen,
+  } = props;
 
   let [isMouseEnterButton, setMouseEnterButton] = useState(false);
+  let [state, setState] = useState({
+    userName: "",
+    userDesciption: "",
+    userAvatar: "",
+  });
+
+  React.useEffect(() => {
+    api
+      .getProfile()
+      .then((data) => {
+        console.log(data);
+        setState({
+          userName: data.name,
+          userDesciption: data.about,
+          userAvatar: data.avatar,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleMouseEnter = () => {
     setMouseEnterButton(true);
@@ -18,7 +48,7 @@ function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__name">
-          <h1 className="profile__title"></h1>
+          <h1 className="profile__title">{state.userName}</h1>
         </div>
 
         <button
@@ -28,12 +58,13 @@ function Main(props) {
           onClick={onEditeProfile}
         ></button>
 
-        <p className="profile__description"></p>
+        <p className="profile__description">{state.userDescription}</p>
 
         <div
           className="profile__user-pic"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          style={{ backgroundImage: `url(${state.userAvatar})` }}
         >
           {isMouseEnterButton && (
             <button
@@ -89,6 +120,9 @@ function Main(props) {
           />
 
           <span id="form-field-job-error" className="popup__error"></span>
+          <button type="submit" class="popup__submit" aria-label="Сохранить">
+            Сохранить
+          </button>
         </PopupWithForm>
       )}
       {isAddPlacePopupOpen && (
@@ -121,6 +155,9 @@ function Main(props) {
           />
 
           <span id="form-field-link-error" className="popup__error"></span>
+          <button type="submit" className="popup__submit" aria-label="Создать">
+            Создать
+          </button>
         </PopupWithForm>
       )}
       {isEditAvatarPopupOpen && (
@@ -140,6 +177,9 @@ function Main(props) {
           />
 
           <span id="form-field-user-pic-error" className="popup__error"></span>
+          <button type="submit" className="popup__submit" aria-label="Создать">
+            Сохранить
+          </button>
         </PopupWithForm>
       )}
     </main>
