@@ -22,7 +22,7 @@ function Main(props) {
     userDesciption: "",
     userAvatar: "",
   });
-  let [cards, setCards] = useState([]);
+  const [cards, setCards] = useState([]);
 
   React.useEffect(() => {
     api
