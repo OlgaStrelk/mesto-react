@@ -3,6 +3,8 @@ import "../index.css";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import ImagePopup from "./ImagePopup";
+import PopupWithForm from "./PopupWithForm";
 
 function App() {
   let [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -34,10 +36,6 @@ function App() {
         <div className="page__container">
           <Header />
           <Main
-            onClose={closeAllPopups}
-            isEditProfilePopupOpen={isEditProfilePopupOpen}
-            isAddPlacePopupOpen={isAddPlacePopupOpen}
-            isEditAvatarPopupOpen={isEditAvatarPopupOpen}
             onEditeProfile={handleEditProfileClick}
             onEditAvatar={handleEditAvatarClick}
             onAddPlace={handleAddPlaceClick}
@@ -49,7 +47,7 @@ function App() {
               title="Редактировать профиль"
               name="profile"
               isOpen={isEditProfilePopupOpen}
-              onClose={onClose}
+              onClose={closeAllPopups}
             >
               <input
                 required
@@ -92,7 +90,7 @@ function App() {
               title="Новое место"
               name="add-card"
               isOpen={isAddPlacePopupOpen}
-              onClose={onClose}
+              onClose={closeAllPopups}
             >
               <input
                 required
@@ -131,7 +129,7 @@ function App() {
               title="Обновить аватар"
               name="edit-user-pic"
               isOpen={isEditAvatarPopupOpen}
-              onClose={onClose}
+              onClose={closeAllPopups}
             >
               <input
                 required
@@ -155,7 +153,7 @@ function App() {
               </button>
             </PopupWithForm>
           )}
-          <ImagePopup selectedCard={selectedCard} onClose={onClose} />
+          <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
           <Footer />
         </div>
       </div>

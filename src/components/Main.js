@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
-import PopupWithForm from "./PopupWithForm";
 import Card from "./Card";
 import { api } from "../utils/API";
-import ImagePopup from "./ImagePopup";
 
 function Main(props) {
   const {
-    onClose,
     onEditeProfile,
     onEditAvatar,
     onAddPlace,
-    isEditProfilePopupOpen,
-    isAddPlacePopupOpen,
-    isEditAvatarPopupOpen,
     onCardClick,
     selectedCard,
   } = props;
