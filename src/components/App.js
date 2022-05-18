@@ -131,7 +131,7 @@ function App() {
               className="popup__error"
             ></span>
           </PopupWithForm>
-          {selectedCard && <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />}
+          <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
           <Footer />
         </div>
       </div>
