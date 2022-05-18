@@ -48,6 +48,7 @@ function App() {
               name="profile"
               isOpen={isEditProfilePopupOpen}
               onClose={closeAllPopups}
+              buttonText="Сохранить"
             >
               <input
                 required
@@ -76,13 +77,6 @@ function App() {
               />
 
               <span id="form-field-job-error" className="popup__error"></span>
-              <button
-                type="submit"
-                className="popup__submit"
-                aria-label="Сохранить"
-              >
-                Сохранить
-              </button>
             </PopupWithForm>
           )}
           {isAddPlacePopupOpen && (
@@ -91,6 +85,7 @@ function App() {
               name="add-card"
               isOpen={isAddPlacePopupOpen}
               onClose={closeAllPopups}
+              buttonText="Создать"
             >
               <input
                 required
@@ -115,13 +110,6 @@ function App() {
               />
 
               <span id="form-field-link-error" className="popup__error"></span>
-              <button
-                type="submit"
-                className="popup__submit"
-                aria-label="Создать"
-              >
-                Создать
-              </button>
             </PopupWithForm>
           )}
           {isEditAvatarPopupOpen && (
@@ -130,6 +118,7 @@ function App() {
               name="edit-user-pic"
               isOpen={isEditAvatarPopupOpen}
               onClose={closeAllPopups}
+              buttonText="Сохранить"
             >
               <input
                 required
@@ -144,13 +133,6 @@ function App() {
                 id="form-field-user-pic-error"
                 className="popup__error"
               ></span>
-              <button
-                type="submit"
-                className="popup__submit"
-                aria-label="Создать"
-              >
-                Сохранить
-              </button>
             </PopupWithForm>
           )}
           <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
