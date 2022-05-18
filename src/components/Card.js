@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function Card(props) {
   
   const handleClick = () => {
-    props.onCardClick([props.card, true]);
+    props.onCardClick(props.card);
   }
 
   return (

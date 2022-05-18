@@ -2,12 +2,8 @@ import React from "react";
 
 function ImagePopup(props) {
   const { selectedCard, onClose } = props;
-  let card = selectedCard[0];
-  let isOpen = selectedCard[1];
   return (
-    <div
-      className={`popup popup_type_big-image ${isOpen && "popup_is-opened"}`}
-    >
+    <div className="popup popup_type_big-image popup_is-opened">
       <div className="popup__container popup__container_type_img">
         <button
           type="button"
@@ -16,9 +12,13 @@ function ImagePopup(props) {
           onClick={onClose}
         ></button>
 
-        <img className="popup__image" src={card.link} alt={card.name}/>
+        <img
+          className="popup__image"
+          src={selectedCard.link}
+          alt={selectedCard.name}
+        />
 
-        <p className="popup__caption">{card.name}</p>
+        <p className="popup__caption">{selectedCard.name}</p>
       </div>
     </div>
   );

@@ -84,8 +84,6 @@ function Main(props) {
         ></button>
       </section>
 
-      <section className="cards"></section>
-
       <section className="cards">
         {cards.map((card) => (
           <Card

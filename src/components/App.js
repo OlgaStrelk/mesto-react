@@ -10,7 +10,7 @@ function App() {
   let [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   let [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   let [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
-  let [selectedCard, handleCardClick] = useState([" ", false]);
+  let [selectedCard, handleCardClick] = useState(null);
 
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
@@ -27,7 +27,7 @@ function App() {
     setEditProfilePopupOpen(false);
     setEditAvatarPopupOpen(false);
     setAddPlacePopupOpen(false);
-    handleCardClick([" ", false]);
+    handleCardClick(null);
   };
 
   return (
@@ -131,7 +131,7 @@ function App() {
               className="popup__error"
             ></span>
           </PopupWithForm>
-          <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
+          {selectedCard && <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />}
           <Footer />
         </div>
       </div>
