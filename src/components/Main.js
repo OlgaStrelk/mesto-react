@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import { api } from "../utils/API";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
   const {
@@ -10,26 +11,17 @@ function Main(props) {
     onCardClick,
     selectedCard,
   } = props;
+
+  const currentUser = React.useContext(CurrentUserContext);
   const [isMouseEnterButton, setMouseEnterButton] = useState(false);
-  const [stateProfile, setStateProfile] = useState({
-    userName: "",
-    userDesciption: "",
-    userAvatar: "",
-  });
+
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    api.getInitialCards().then((data) => {
-      setCards(data);
-    });
     api
-      .getProfile()
+      .getInitialCards()
       .then((data) => {
-        setStateProfile({
-          userName: data.name,
-          userDesciption: data.about,
-          userAvatar: data.avatar,
-        });
+        setCards(data);
       })
       .catch((err) => {
         console.log(err);
@@ -43,12 +35,12 @@ function Main(props) {
   const handleMouseLeave = () => {
     setMouseEnterButton(false);
   };
-
+  
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__name">
-          <h1 className="profile__title">{stateProfile.userName}</h1>
+          <h1 className="profile__title">{currentUser.name}</h1>
         </div>
 
         <button
@@ -58,13 +50,13 @@ function Main(props) {
           onClick={onEditeProfile}
         ></button>
 
-        <p className="profile__description">{stateProfile.userDescription}</p>
+        <p className="profile__description">{currentUser.about}</p>
 
         <div
           className="profile__user-pic"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          style={{ backgroundImage: `url(${stateProfile.userAvatar})` }}
+          style={{ backgroundImage: `url(${currentUser.avatar})` }}
         >
           {isMouseEnterButton && (
             <button

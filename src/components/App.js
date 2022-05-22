@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import "../index.css";
+import { api } from "../utils/API";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -8,7 +9,7 @@ import ImagePopup from "./ImagePopup";
 import PopupWithForm from "./PopupWithForm";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState({});
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -19,9 +20,9 @@ function App() {
       .getProfile()
       .then((data) => {
         setCurrentUser({
-          userName: data.name,
-          userDesciption: data.about,
-          userAvatar: data.avatar,
+          name: data.name,
+          about: data.about,
+          avatar: data.avatar,
         });
       })
       .catch((err) => {
