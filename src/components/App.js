@@ -9,7 +9,7 @@ import PopupWithForm from "./PopupWithForm";
 function App() {
   
   let [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
-   [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [selectedCard, handleCardClick] = useState(null);
 
