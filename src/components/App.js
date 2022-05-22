@@ -7,10 +7,11 @@ import ImagePopup from "./ImagePopup";
 import PopupWithForm from "./PopupWithForm";
 
 function App() {
+  
   let [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   let [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   let [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
-  let [selectedCard, handleCardClick] = useState(null);
+  const [selectedCard, handleCardClick] = useState(null);
 
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
