@@ -1,6 +1,6 @@
-.cards__remove {
+.cards__remove-button {
   position: absolute;
-  z-index:1;
+  z-index: 1;
   background: center center no-repeat url("../../../images/remove.svg");
   height: 32px;
   width: 32px;
@@ -10,8 +10,9 @@
   cursor: pointer;
   transition: opacity 0.5s linear;
   opacity: 1;
+  visibility: visible;
 }
 
-.cards__remove:hover {
+.cards__remove-button:hover {
   opacity: 0.6;
 }
