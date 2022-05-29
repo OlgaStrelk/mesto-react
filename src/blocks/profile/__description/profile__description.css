@@ -18,5 +18,6 @@
     line-height: 16.94px;
     justify-self: center;
     max-width: 282px;
+    min-height: 17px;
   }
 }
