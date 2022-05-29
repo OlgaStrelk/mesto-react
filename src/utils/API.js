@@ -1,4 +1,4 @@
-import {getResponse} from "../utils/getResponse"
+import { getResponse } from "../utils/getResponse";
 class Api {
   constructor({ baseUrl, headers }) {
     this._headers = headers;
@@ -39,14 +39,16 @@ class Api {
     }).then(getResponse);
   }
 
-
-  changeLikeCardStatus(){
-
-  }
-
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
+      headers: this._headers,
+    }).then(getResponse);
+  }
+
+  changeLikeCardStatus(cardID, like) {
+    return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
+      method: like ? "PUT" : "DELETE",
       headers: this._headers,
     }).then(getResponse);
   }
