@@ -5,7 +5,6 @@ function Card(props) {
   const { card } = props;
   const currentUser = React.useContext(CurrentUserContext);
   const isOwn = card.owner._id === currentUser._id;
-  console.log(isOwn);
 
   const cardDeleteButtonClassName = `${
     isOwn ? "cards__remove-button" : "cards__remove-button_hidden"

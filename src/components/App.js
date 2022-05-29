@@ -19,7 +19,6 @@ function App() {
     api
       .getProfile()
       .then((data) => {
-        console.log(data);
         setCurrentUser(data);
       })
 
@@ -27,8 +26,6 @@ function App() {
         console.log(err);
       });
   }, []);
-
-  console.log(currentUser);
 
 
   const handleEditProfileClick = () => {
