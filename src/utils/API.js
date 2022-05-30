@@ -1,4 +1,3 @@
-import { getResponse } from "../utils/getResponse";
 class Api {
   constructor({ baseUrl, headers }) {
     this._headers = headers;
@@ -8,13 +7,13 @@ class Api {
   getProfile() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then(getResponse);
+    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    }).then(getResponse);
+    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 
   editProfile(name, about) {
@@ -25,7 +24,7 @@ class Api {
         name,
         about,
       }),
-    }).then(getResponse);
+    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 
   addCard(name, link) {
@@ -36,35 +35,20 @@ class Api {
         name,
         link,
       }),
-    }).then(getResponse);
+    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(getResponse);
+    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
-
   changeLikeCardStatus(cardID, like) {
     return fetch(`${this._baseUrl}/cards/${cardID}/likes`, {
       method: like ? "PUT" : "DELETE",
       headers: this._headers,
-    }).then(getResponse);
-  }
-
-  deleteLike(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(getResponse);
-  }
-
-  addLike(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then(getResponse);
+    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 
   changeUserPic(avatar) {
@@ -74,7 +58,7 @@ class Api {
       body: JSON.stringify({
         avatar,
       }),
-    }).then(getResponse);
+    }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
   }
 }
 
