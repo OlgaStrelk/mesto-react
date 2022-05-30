@@ -12,8 +12,8 @@ function Card(props) {
 
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
-  const cardLikeButtonClassName = `${
-    isLiked ? "cards__like_is-active" : "cards__like"
+  const cardLikeButtonClassName = ` ${
+    !isLiked ? "cards__like" : "cards__like cards__like_is-active"
   }`;
 
   const handleClick = () => {
