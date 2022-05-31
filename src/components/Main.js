@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
-import { api } from "../utils/API";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
@@ -8,25 +7,15 @@ function Main(props) {
     onEditeProfile,
     onEditAvatar,
     onAddPlace,
+    cards,
     onCardClick,
     selectedCard,
+    onCardDelete,
+    onCardLike,
   } = props;
 
   const currentUser = React.useContext(CurrentUserContext);
   const [isMouseEnterButton, setMouseEnterButton] = useState(false);
-
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   const handleMouseEnter = () => {
     setMouseEnterButton(true);
@@ -35,14 +24,6 @@ function Main(props) {
   const handleMouseLeave = () => {
     setMouseEnterButton(false);
   };
-  
-  function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    console.log(isLiked)
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    });
-}
 
   return (
     <main className="content">
@@ -91,7 +72,8 @@ function Main(props) {
             card={card}
             selectedCard={selectedCard}
             onCardClick={onCardClick}
-            onCardLike={handleCardLike}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
           />
         ))}
       </section>

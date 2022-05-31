@@ -13,7 +13,10 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isDeleteCardPopupOpen, setDeleteCardPopupOpen] = useState(false);
   const [selectedCard, handleCardClick] = useState(null);
+  const [cardDelete, setCardDelete] = useState(null);
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     api
@@ -27,6 +30,16 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
@@ -47,6 +60,29 @@ function App() {
     handleCardClick(null);
   };
 
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  };
+
+  const handleCardDeleteRequest = (card) => {
+    setCardDelete(card);
+    setDeleteCardPopupOpen(true);
+  };
+
+  const handleCardDelete = (e) => {
+    e.preventDefault();
+    api
+      .deleteCard(cardDelete._id)
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== cardDelete._id));
+        setDeleteCardPopupOpen(false);
+      })
+      .catch((err) => console.log(`При удалении карточки: ${err}`));
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
@@ -54,12 +90,24 @@ function App() {
           <div className="page__container">
             <Header />
             <Main
+              cards={cards}
               onEditeProfile={handleEditProfileClick}
               onEditAvatar={handleEditAvatarClick}
               onAddPlace={handleAddPlaceClick}
               onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
               selectedCard={selectedCard}
+              onCardDelete={handleCardDeleteRequest}
             />
+
+            <PopupWithForm
+              title="Вы уверены?"
+              name="delete-card"
+              isOpen={isDeleteCardPopupOpen}
+              onClose={closeAllPopups}
+              buttonText="Да"
+              onSubmit={handleCardDelete}
+            ></PopupWithForm>
 
             <PopupWithForm
               title="Редактировать профиль"
