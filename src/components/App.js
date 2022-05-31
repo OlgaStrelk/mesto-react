@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -154,27 +155,11 @@ function App() {
 
               <span id="form-field-link-error" className="popup__error"></span>
             </PopupWithForm>
-            <PopupWithForm
-              title="Обновить аватар"
-              name="edit-user-pic"
+            <EditAvatarPopup
               isOpen={isEditAvatarPopupOpen}
               onClose={closeAllPopups}
-              buttonText="Сохранить"
-            >
-              <input
-                required
-                type="url"
-                name="link"
-                className="popup__field"
-                id="form-field-user-pic"
-                placeholder="Ссылка на аватар"
-              />
+            />
 
-              <span
-                id="form-field-user-pic-error"
-                className="popup__error"
-              ></span>
-            </PopupWithForm>
             <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
             <Footer />
           </div>
