@@ -7,6 +7,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import PopupWithForm from "./PopupWithForm";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -40,6 +41,13 @@ function App() {
         console.log(err);
       });
   }, []);
+
+  const handleUpdateUser = (userUpdate) => {
+    api.editProfile(userUpdate.name, userUpdate.about).then((newData) => {
+      setCurrentUser(newData);
+      closeAllPopups();
+    });
+  };
 
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
@@ -109,41 +117,11 @@ function App() {
               onSubmit={handleCardDelete}
             ></PopupWithForm>
 
-            <PopupWithForm
-              title="Редактировать профиль"
-              name="profile"
+            <EditProfilePopup
               isOpen={isEditProfilePopupOpen}
               onClose={closeAllPopups}
-              buttonText="Сохранить"
-            >
-              <input
-                required
-                minLength="2"
-                maxLength="40"
-                type="text"
-                autoComplete="off"
-                name="name"
-                id="form-field-name"
-                className="popup__field popup__field_type_name"
-                placeholder="Ваше имя"
-              />
-
-              <span id="form-field-name-error" className="popup__error"></span>
-
-              <input
-                required
-                minLength="2"
-                maxLength="200"
-                type="text"
-                autoComplete="off"
-                name="occupation"
-                id="form-field-job"
-                className="popup__field popup__field_type_job"
-                placeholder="Чем вы занимаетесь?"
-              />
-
-              <span id="form-field-job-error" className="popup__error"></span>
-            </PopupWithForm>
+              onUpdateUser={handleUpdateUser}
+            />
 
             <PopupWithForm
               title="Новое место"
