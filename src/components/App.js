@@ -9,6 +9,7 @@ import ImagePopup from "./ImagePopup";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -131,37 +132,11 @@ function App() {
               onUpdateUser={handleUpdateUser}
             />
 
-            <PopupWithForm
-              title="Новое место"
-              name="add-card"
-              isOpen={isAddPlacePopupOpen}
+            <AddPlacePopup
               onClose={closeAllPopups}
-              buttonText="Создать"
-            >
-              <input
-                required
-                minLength="2"
-                maxLength="30"
-                type="text"
-                name="place"
-                className="popup__field"
-                id="form-field-place"
-                placeholder="Название"
-              />
-
-              <span id="form-field-place-error" className="popup__error"></span>
-
-              <input
-                required
-                type="url"
-                name="link"
-                className="popup__field"
-                id="form-field-link"
-                placeholder="Ссылка на картинку"
-              />
-
-              <span id="form-field-link-error" className="popup__error"></span>
-            </PopupWithForm>
+              isOpen={isAddPlacePopupOpen}
+            ></AddPlacePopup>
+            
             <EditAvatarPopup
               isOpen={isEditAvatarPopupOpen}
               onClose={closeAllPopups}
