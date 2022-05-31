@@ -58,6 +58,13 @@ function App() {
     });
   };
 
+  const handleAddPlaceSubmit = (name, link) => {
+    api.addCard(name, link).then((newCard) => {
+      setCards([newCard, ...cards]);
+    });
+    closeAllPopups();
+  };
+
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
   };
@@ -135,8 +142,9 @@ function App() {
             <AddPlacePopup
               onClose={closeAllPopups}
               isOpen={isAddPlacePopupOpen}
+              onAddCard={handleAddPlaceSubmit}
             ></AddPlacePopup>
-            
+
             <EditAvatarPopup
               isOpen={isEditAvatarPopupOpen}
               onClose={closeAllPopups}
