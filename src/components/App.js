@@ -50,6 +50,13 @@ function App() {
     });
   };
 
+  const handleUpdateAvatar = ({ avatar }) => {
+    api.changeUserPic(avatar).then((newAvatar) => {
+      setCurrentUser(newAvatar);
+      closeAllPopups();
+    });
+  };
+
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
   };
@@ -158,6 +165,7 @@ function App() {
             <EditAvatarPopup
               isOpen={isEditAvatarPopupOpen}
               onClose={closeAllPopups}
+              onUpdateAvatar={handleUpdateAvatar}
             />
 
             <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
