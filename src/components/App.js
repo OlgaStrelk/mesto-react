@@ -28,8 +28,7 @@ function App() {
         setCurrentUser(data);
       })
 
-      .catch((err) => 
-        console.log(`При загрузке данных пользователя: ${err}`));
+      .catch((err) => console.log(`При загрузке данных пользователя: ${err}`));
   }, []);
 
   useEffect(() => {
@@ -48,11 +47,11 @@ function App() {
       .editProfile(userUpdate.name, userUpdate.about)
       .then((newData) => {
         setCurrentUser(newData);
-        closeAllPopups();
       })
       .catch((err) =>
         console.log(`При обновлении информации о пользователе: ${err}`)
-      );
+      )
+      .then(() => closeAllPopups());
   };
 
   const handleUpdateAvatar = ({ avatar }) => {
@@ -60,20 +59,21 @@ function App() {
       .changeUserPic(avatar)
       .then((newAvatar) => {
         setCurrentUser(newAvatar);
-        closeAllPopups();
       })
       .catch((err) =>
         console.log(`При обновлении аватара пользователя: ${err}`)
-      );
+      )
+      .then(() => closeAllPopups());
   };
 
   const handleAddPlaceSubmit = (name, link) => {
-    api.addCard(name, link).then((newCard) => {
-      setCards([newCard, ...cards]);
-    });
-    closeAllPopups().catch((err) =>
-      console.log(`При добавлении новой карточки: ${err}`)
-    );
+    api
+      .addCard(name, link)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+      })
+      .catch((err) => console.log(`При добавлении новой карточки: ${err}`))
+      .then(() => closeAllPopups());
   };
 
   const handleEditProfileClick = () => {
