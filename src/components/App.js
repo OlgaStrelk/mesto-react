@@ -64,7 +64,8 @@ function App() {
     api.addCard(name, link).then((newCard) => {
       setCards([newCard, ...cards]);
     });
-    closeAllPopups();
+    closeAllPopups()
+    .catch(err => console.log(`При добавлении новой карточки: ${err}`))
   };
 
   const handleEditProfileClick = () => {
