@@ -10,7 +10,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   React.useEffect(() => {
     setUserName(currentUser.name);
     setJob(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleNameChange(e) {
     setUserName(e.target.value);
@@ -43,7 +43,6 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
         maxLength="40"
         type="text"
         autoComplete="off"
-        // name="name"
         value={userName}
         onChange={handleNameChange}
         id="form-field-name"
