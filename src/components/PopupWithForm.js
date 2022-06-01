@@ -2,7 +2,7 @@ import React from "react";
 
 const PopupWithForm = ({
   title,
-  name,
+  formName,
   isOpen,
   onClose,
   children,
@@ -10,7 +10,7 @@ const PopupWithForm = ({
   onSubmit
 }) => {
   return (
-    <div className={`popup poup_type_${name} ${isOpen && "popup_is-opened"}`}>
+    <div className={`popup poup_type_${formName} ${isOpen && "popup_is-opened"}`}>
       <div className="popup__container">
         <button
           type="button"
@@ -21,7 +21,7 @@ const PopupWithForm = ({
 
         <h2 className="popup__title">{title}</h2>
         <form
-          name="${name}"
+          name={formName}
           className="popup__form popup__form_type_${name}"
           onSubmit={onSubmit}
           noValidate

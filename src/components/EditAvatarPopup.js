@@ -14,7 +14,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   return (
     <PopupWithForm
       title="Обновить аватар"
-      name="edit-user-pic"
+      formName="edit-user-pic"
       isOpen={isOpen}
       onClose={onClose}
       buttonText="Сохранить"
@@ -24,7 +24,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         ref={inputValue}
         required
         type="url"
-        // name="link"
+        name="link"
         className="popup__field"
         id="form-field-user-pic"
         placeholder="Ссылка на аватар"
