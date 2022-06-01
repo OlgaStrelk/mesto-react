@@ -48,7 +48,8 @@ function App() {
     api.editProfile(userUpdate.name, userUpdate.about).then((newData) => {
       setCurrentUser(newData);
       closeAllPopups();
-    });
+    })
+    .catch(err => console.log(`При обновлении информации о пользователе: ${err}`))
   };
 
   const handleUpdateAvatar = ({ avatar }) => {
