@@ -41,6 +41,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
         required
         minLength="2"
         maxLength="40"
+        value={userName || ''}
         type="text"
         autoComplete="off"
         onChange={handleNameChange}
@@ -55,6 +56,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
         required
         minLength="2"
         maxLength="200"
+        value={job || ''}
         type="text"
         autoComplete="off"
         name="occupation"
