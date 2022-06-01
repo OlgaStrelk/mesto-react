@@ -29,7 +29,7 @@ function App() {
       })
 
       .catch((err) => {
-        console.log(err);
+        console.log(`При загрузке данных пользователя: ${err}`);
       });
   }, []);
 
@@ -39,33 +39,42 @@ function App() {
       .then((data) => {
         setCards(data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) =>
+        console.log(`При загрузке первоначального массива карточек: ${err}`)
+      );
   }, []);
 
   const handleUpdateUser = (userUpdate) => {
-    api.editProfile(userUpdate.name, userUpdate.about).then((newData) => {
-      setCurrentUser(newData);
-      closeAllPopups();
-    })
-    .catch(err => console.log(`При обновлении информации о пользователе: ${err}`))
+    api
+      .editProfile(userUpdate.name, userUpdate.about)
+      .then((newData) => {
+        setCurrentUser(newData);
+        closeAllPopups();
+      })
+      .catch((err) =>
+        console.log(`При обновлении информации о пользователе: ${err}`)
+      );
   };
 
   const handleUpdateAvatar = ({ avatar }) => {
-    api.changeUserPic(avatar).then((newAvatar) => {
-      setCurrentUser(newAvatar);
-      closeAllPopups();
-    })
-    .catch(err => console.log(`При обновлении аватара пользователя: ${err}`))
+    api
+      .changeUserPic(avatar)
+      .then((newAvatar) => {
+        setCurrentUser(newAvatar);
+        closeAllPopups();
+      })
+      .catch((err) =>
+        console.log(`При обновлении аватара пользователя: ${err}`)
+      );
   };
 
   const handleAddPlaceSubmit = (name, link) => {
     api.addCard(name, link).then((newCard) => {
       setCards([newCard, ...cards]);
     });
-    closeAllPopups()
-    .catch(err => console.log(`При добавлении новой карточки: ${err}`))
+    closeAllPopups().catch((err) =>
+      console.log(`При добавлении новой карточки: ${err}`)
+    );
   };
 
   const handleEditProfileClick = () => {
