@@ -56,7 +56,8 @@ function App() {
     api.changeUserPic(avatar).then((newAvatar) => {
       setCurrentUser(newAvatar);
       closeAllPopups();
-    });
+    })
+    .catch(err => console.log(`При обновлении аватара пользователя: ${err}`))
   };
 
   const handleAddPlaceSubmit = (name, link) => {
