@@ -4,16 +4,16 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState(currentUser.name);
+  const [userName, setUserName] = useState(currentUser.name);
   const [job, setJob] = useState(currentUser.about);
 
   React.useEffect(() => {
-    setName(currentUser.name);
+    setUserName(currentUser.name);
     setJob(currentUser.about);
   }, [currentUser]);
 
   function handleNameChange(e) {
-    setName(e.target.value);
+    setUserName(e.target.value);
   }
 
   function handleJobChange(e) {
@@ -23,7 +23,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateUser({
-      name,
+      name: userName,
       about: job,
     });
   }
@@ -43,8 +43,8 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
         maxLength="40"
         type="text"
         autoComplete="off"
-        name="name"
-        value={name}
+        // name="name"
+        value={userName}
         onChange={handleNameChange}
         id="form-field-name"
         className="popup__field popup__field_type_name"
@@ -59,7 +59,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
         maxLength="200"
         type="text"
         autoComplete="off"
-        name="occupation"
+        // name="occupation"
         value={job}
         onChange={handleJobChange}
         id="form-field-job"

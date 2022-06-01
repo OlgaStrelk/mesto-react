@@ -33,7 +33,7 @@ function AddPlacePopup({ isOpen, onClose, onAddCard }) {
         minLength="2"
         maxLength="30"
         type="text"
-        name="place"
+        // name="place"
         value={name}
         onChange={handleNameChange}
         className="popup__field"
@@ -46,7 +46,7 @@ function AddPlacePopup({ isOpen, onClose, onAddCard }) {
       <input
         required
         type="url"
-        name="link"
+        // name="link"
         value={link}
         onChange={handleLinkChange}
         className="popup__field"
