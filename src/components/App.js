@@ -28,9 +28,8 @@ function App() {
         setCurrentUser(data);
       })
 
-      .catch((err) => {
-        console.log(`При загрузке данных пользователя: ${err}`);
-      });
+      .catch((err) => 
+        console.log(`При загрузке данных пользователя: ${err}`));
   }, []);
 
   useEffect(() => {
