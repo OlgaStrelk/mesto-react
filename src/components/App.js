@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Route, useHistory, Switch, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import "../index.css";
 import { api } from "../utils/API";
@@ -20,6 +21,7 @@ function App() {
   const [selectedCard, handleCardClick] = useState(null);
   const [cardDelete, setCardDelete] = useState(null);
   const [cards, setCards] = useState([]);
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     api
@@ -129,6 +131,8 @@ function App() {
         <div className="page">
           <div className="page__container">
             <Header />
+            <Switch>
+              <Route exact path="/">
             <Main
               cards={cards}
               onEditeProfile={handleEditProfileClick}
@@ -167,7 +171,15 @@ function App() {
               onUpdateAvatar={handleUpdateAvatar}
             />
 
-            <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
+            <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} /></Route>
+            <Route path="/sign-up">
+            {/* <Register /> */}
+            </Route>
+            <Route path="/sign-in">
+              {/* <Login /> */}
+            </Route>
+            <Route path="*">{isLoggedIn ? <Redirect to="/" /> : <Redirect to=""/>}</Route>
+            </Switch>
             <Footer />
           </div>
         </div>
