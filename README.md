@@ -27,7 +27,7 @@
 * персонализация контента в зависимости от того, кто использует приложение
 
 ### Демоверсия проекта:
-https://olgastrelk.github.io/mesto/
+https://olgastrelk.github.io/mesto-react/
 
 
 # Project: Mesto
@@ -52,3 +52,6 @@ https://olgastrelk.github.io/mesto/
 * ability to like
 * content removal
 * data exchange with the API
+
+### Project demo:
+https://olgastrelk.github.io/mesto-react/
