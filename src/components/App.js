@@ -11,6 +11,8 @@ import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import Login from "./Login";
+import Register from "./Register";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -173,10 +175,10 @@ function App() {
 
             <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} /></Route>
             <Route path="/sign-up">
-            {/* <Register /> */}
+            <Register />
             </Route>
             <Route path="/sign-in">
-              {/* <Login /> */}
+              <Login />
             </Route>
             <Route path="*">{isLoggedIn ? <Redirect to="/" /> : <Redirect to=""/>}</Route>
             </Switch>
