@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, useHistory, Switch, Redirect } from 'react-router-dom';
+import { Route, useHistory, Switch, Redirect } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import "../index.css";
 import { api } from "../utils/API";
@@ -135,52 +135,58 @@ function App() {
             <Header />
             <Switch>
               <Route exact path="/">
-            <Main
-              cards={cards}
-              onEditeProfile={handleEditProfileClick}
-              onEditAvatar={handleEditAvatarClick}
-              onAddPlace={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              selectedCard={selectedCard}
-              onCardDelete={handleCardDeleteRequest}
-            />
+                <Main
+                  cards={cards}
+                  onEditeProfile={handleEditProfileClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  selectedCard={selectedCard}
+                  onCardDelete={handleCardDeleteRequest}
+                />
 
-            <PopupWithForm
-              title="Вы уверены?"
-              name="delete-card"
-              isOpen={isDeleteCardPopupOpen}
-              onClose={closeAllPopups}
-              buttonText="Да"
-              onSubmit={handleCardDelete}
-            ></PopupWithForm>
+                <PopupWithForm
+                  title="Вы уверены?"
+                  name="delete-card"
+                  isOpen={isDeleteCardPopupOpen}
+                  onClose={closeAllPopups}
+                  buttonText="Да"
+                  onSubmit={handleCardDelete}
+                ></PopupWithForm>
 
-            <EditProfilePopup
-              isOpen={isEditProfilePopupOpen}
-              onClose={closeAllPopups}
-              onUpdateUser={handleUpdateUser}
-            />
+                <EditProfilePopup
+                  isOpen={isEditProfilePopupOpen}
+                  onClose={closeAllPopups}
+                  onUpdateUser={handleUpdateUser}
+                />
 
-            <AddPlacePopup
-              onClose={closeAllPopups}
-              isOpen={isAddPlacePopupOpen}
-              onAddCard={handleAddPlaceSubmit}
-            ></AddPlacePopup>
+                <AddPlacePopup
+                  onClose={closeAllPopups}
+                  isOpen={isAddPlacePopupOpen}
+                  onAddCard={handleAddPlaceSubmit}
+                ></AddPlacePopup>
 
-            <EditAvatarPopup
-              isOpen={isEditAvatarPopupOpen}
-              onClose={closeAllPopups}
-              onUpdateAvatar={handleUpdateAvatar}
-            />
+                <EditAvatarPopup
+                  isOpen={isEditAvatarPopupOpen}
+                  onClose={closeAllPopups}
+                  onUpdateAvatar={handleUpdateAvatar}
+                />
 
-            <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} /></Route>
-            <Route path="/sign-up">
-            <Register />
-            </Route>
-            <Route path="/sign-in">
-              <Login />
-            </Route>
-            <Route path="*">{isLoggedIn ? <Redirect to="/" /> : <Redirect to=""/>}</Route>
+                <ImagePopup
+                  selectedCard={selectedCard}
+                  onClose={closeAllPopups}
+                />
+              </Route>
+              <Route path="/sign-up">
+                <Register />
+              </Route>
+              <Route path="/sign-in">
+                <Login />
+              </Route>
+              <Route path="*">
+                {isLoggedIn ? <Redirect to="/" /> : <Redirect to="" />}
+              </Route>
             </Switch>
             <Footer />
           </div>
