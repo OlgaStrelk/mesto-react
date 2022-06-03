@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Route, useHistory, Switch, Redirect } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import "../index.css";
 import { api } from "../utils/API";
@@ -10,6 +11,8 @@ import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import Login from "./Login";
+import Register from "./Register";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -20,6 +23,7 @@ function App() {
   const [selectedCard, handleCardClick] = useState(null);
   const [cardDelete, setCardDelete] = useState(null);
   const [cards, setCards] = useState([]);
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     api
@@ -129,45 +133,61 @@ function App() {
         <div className="page">
           <div className="page__container">
             <Header />
-            <Main
-              cards={cards}
-              onEditeProfile={handleEditProfileClick}
-              onEditAvatar={handleEditAvatarClick}
-              onAddPlace={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              selectedCard={selectedCard}
-              onCardDelete={handleCardDeleteRequest}
-            />
+            <Switch>
+              <Route exact path="/">
+                <Main
+                  cards={cards}
+                  onEditeProfile={handleEditProfileClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  selectedCard={selectedCard}
+                  onCardDelete={handleCardDeleteRequest}
+                />
 
-            <PopupWithForm
-              title="Вы уверены?"
-              name="delete-card"
-              isOpen={isDeleteCardPopupOpen}
-              onClose={closeAllPopups}
-              buttonText="Да"
-              onSubmit={handleCardDelete}
-            ></PopupWithForm>
+                <PopupWithForm
+                  title="Вы уверены?"
+                  name="delete-card"
+                  isOpen={isDeleteCardPopupOpen}
+                  onClose={closeAllPopups}
+                  buttonText="Да"
+                  onSubmit={handleCardDelete}
+                ></PopupWithForm>
 
-            <EditProfilePopup
-              isOpen={isEditProfilePopupOpen}
-              onClose={closeAllPopups}
-              onUpdateUser={handleUpdateUser}
-            />
+                <EditProfilePopup
+                  isOpen={isEditProfilePopupOpen}
+                  onClose={closeAllPopups}
+                  onUpdateUser={handleUpdateUser}
+                />
 
-            <AddPlacePopup
-              onClose={closeAllPopups}
-              isOpen={isAddPlacePopupOpen}
-              onAddCard={handleAddPlaceSubmit}
-            ></AddPlacePopup>
+                <AddPlacePopup
+                  onClose={closeAllPopups}
+                  isOpen={isAddPlacePopupOpen}
+                  onAddCard={handleAddPlaceSubmit}
+                ></AddPlacePopup>
 
-            <EditAvatarPopup
-              isOpen={isEditAvatarPopupOpen}
-              onClose={closeAllPopups}
-              onUpdateAvatar={handleUpdateAvatar}
-            />
+                <EditAvatarPopup
+                  isOpen={isEditAvatarPopupOpen}
+                  onClose={closeAllPopups}
+                  onUpdateAvatar={handleUpdateAvatar}
+                />
 
-            <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
+                <ImagePopup
+                  selectedCard={selectedCard}
+                  onClose={closeAllPopups}
+                />
+              </Route>
+              <Route path="/sign-up">
+                <Register />
+              </Route>
+              <Route path="/sign-in">
+                <Login />
+              </Route>
+              <Route path="*">
+                {isLoggedIn ? <Redirect to="/" /> : <Redirect to="" />}
+              </Route>
+            </Switch>
             <Footer />
           </div>
         </div>

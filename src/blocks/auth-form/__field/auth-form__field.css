@@ -1,0 +1,10 @@
+.auth-form__field {
+  font-family: Inter, sans-serif;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid #CCCCCC;
+  font-size: 14px;
+  padding: 13px 0;
+  width: 100%;
+  color: #fff;
+}
