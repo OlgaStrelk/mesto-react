@@ -190,7 +190,7 @@ function App() {
               </Route>
             </Switch>
             <Footer />
-            <InfoTooltip isOpen/>
+            <InfoTooltip isOpen={false}/>
           </div>
         </div>
       </div>
