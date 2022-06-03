@@ -13,6 +13,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
+import InfoTooltip from './InfoTooltip';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -189,6 +190,7 @@ function App() {
               </Route>
             </Switch>
             <Footer />
+            <InfoTooltip isOpen/>
           </div>
         </div>
       </div>
