@@ -46,6 +46,7 @@ function App() {
   }, [isLoggedIn]);
 
   useEffect(() => {
+    if (isLoggedIn) {
     api
       .getInitialCards()
       .then((data) => {
@@ -54,7 +55,8 @@ function App() {
       .catch((err) =>
         console.log(`При загрузке первоначального массива карточек: ${err}`)
       );
-  }, []);
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
