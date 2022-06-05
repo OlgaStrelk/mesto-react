@@ -41,6 +41,7 @@ https://olgastrelk.github.io/mesto-react/
 * File structure organized by BEM
 * Supported screen resolutions from 320px to 1280px
 * friendly UI
+* HOC usage
 
 **according to the layout on the Figma platform**
 
