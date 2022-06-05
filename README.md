@@ -52,6 +52,10 @@ https://olgastrelk.github.io/mesto-react/
 * ability to like
 * content removal
 * data exchange with the API
+* interface for authentication
+* protected routes
+* registration, authorization and logout
+* content personalization based on who is using the app
 
 ### Project demo:
 https://olgastrelk.github.io/mesto-react/
