@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -14,7 +14,7 @@ function Main(props) {
     onCardLike,
   } = props;
 
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
   const [isMouseEnterButton, setMouseEnterButton] = useState(false);
 
   const handleMouseEnter = () => {

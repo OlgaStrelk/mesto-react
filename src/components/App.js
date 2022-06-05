@@ -13,7 +13,9 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import Login from "./Login";
 import Register from "./Register";
-import InfoTooltip from './InfoTooltip';
+import InfoTooltip from "./InfoTooltip";
+import ProtectedRoute from "./ProtectedRoute";
+import { register, authorize, checkToken } from "../utils/AuthAPI";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -25,16 +27,23 @@ function App() {
   const [cardDelete, setCardDelete] = useState(null);
   const [cards, setCards] = useState([]);
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [tooltipStatus, setTooltipStatus] = useState();
+  const [email, setEmail] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
-    api
-      .getProfile()
-      .then((data) => {
-        setCurrentUser(data);
-      })
+    if (isLoggedIn) {
+      api
+        .getProfile()
+        .then((data) => {
+          setCurrentUser(data);
+        })
 
-      .catch((err) => console.log(`При загрузке данных пользователя: ${err}`));
-  }, []);
+        .catch((err) =>
+          console.log(`При загрузке данных пользователя: ${err}`)
+        );
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     api
@@ -46,6 +55,21 @@ function App() {
         console.log(`При загрузке первоначального массива карточек: ${err}`)
       );
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      checkToken(token)
+        .then((res) => {
+          setEmail(res.data.email);
+          setLoggedIn(true);
+          history.push("/");
+        })
+        .catch(() => {
+          localStorage.removeItem("jwt");
+        });
+    }
+  }, [history]);
 
   const handleUpdateUser = (userUpdate) => {
     api
@@ -98,6 +122,7 @@ function App() {
     setEditAvatarPopupOpen(false);
     setAddPlacePopupOpen(false);
     handleCardClick(null);
+    setTooltipStatus();
   };
 
   const handleCardLike = (card) => {
@@ -128,14 +153,56 @@ function App() {
       .catch((err) => console.log(`При удалении карточки: ${err}`));
   };
 
+  const onRegister = ({ email, password }) => {
+    register(email, password)
+      .then(() => {
+        history.push("/sign-in");
+        setTooltipStatus({
+          text: "Вы успешно зарегистрировались",
+          iconType: "success",
+        });
+      })
+      .catch(() => {
+        setTooltipStatus({
+          text: "Что-то пошло не так!  Попробуйте ещё раз.",
+          iconType: "error",
+        });
+      });
+  };
+
+  const onLogin = ({ email, password }) => {
+    authorize(email, password)
+      .then(() => {
+        setLoggedIn(true);
+        setEmail(email);
+        history.push("/");
+      })
+      .catch(() => {
+        setTooltipStatus({
+          text: "Что-то пошло не так! Попробуйте ещё раз.",
+          iconType: "error",
+        });
+      });
+  };
+
+  const onSignOut = () => {
+    localStorage.removeItem("jwt");
+    setLoggedIn(false);
+    history.push("/sign-in");
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <div className="page">
           <div className="page__container">
-            <Header />
+            <Header email={email} onSignOut={onSignOut} />
             <Switch>
-              <Route exact path="/">
+              <ProtectedRoute
+                exact
+                path="/"
+                loggedIn={isLoggedIn}
+              >
                 <Main
                   cards={cards}
                   onEditeProfile={handleEditProfileClick}
@@ -178,19 +245,27 @@ function App() {
                   selectedCard={selectedCard}
                   onClose={closeAllPopups}
                 />
-              </Route>
+              </ProtectedRoute>
+
               <Route path="/sign-up">
-                <Register />
+                <Register onRegister={onRegister} />
               </Route>
+
               <Route path="/sign-in">
-                <Login />
+                <Login onLogin={onLogin} />
               </Route>
+
               <Route path="*">
-                {isLoggedIn ? <Redirect to="/" /> : <Redirect to="" />}
+                {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
               </Route>
             </Switch>
+
             <Footer />
-            <InfoTooltip isOpen={false}/>
+            <InfoTooltip
+              isOpen={!!tooltipStatus}
+              onClose={closeAllPopups}
+              status={tooltipStatus}
+            />
           </div>
         </div>
       </div>

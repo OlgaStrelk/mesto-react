@@ -1,0 +1,13 @@
+.header_menu-open .header__container {
+  display: flex;
+}
+
+.header_menu-open .header__burger {
+  width: 20px;
+  height: 20px;
+  background: transparent url('../../../images/CloseBurger.svg') center no-repeat;
+  transform: rotate(90deg);
+  right: 30px;
+  bottom: 30px;
+  border: none;
+}
