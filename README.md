@@ -41,7 +41,7 @@ https://olgastrelk.github.io/mesto-react/
 
 ### Review
 
-* The application is implemented using three languages: HTML, CSS and ReactJS.
+* The application is created with HTML, CSS and ReactJS.
 * Semantic layout
 * Responsive layout
 * File structure organized by BEM
@@ -56,7 +56,7 @@ https://olgastrelk.github.io/mesto-react/
 **implemented in JS:**
 * form editing
 * adding content
-* ability to like
+* like handler
 * content removal
 * data exchange with the API
 * interface for authentication
