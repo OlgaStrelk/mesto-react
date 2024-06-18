@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Route, useHistory, Switch, Redirect } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import "../index.css";
 import { api } from "../utils/API";
@@ -29,7 +29,7 @@ function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [tooltipStatus, setTooltipStatus] = useState();
   const [email, setEmail] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -47,14 +47,14 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) =>
-        console.log(`При загрузке первоначального массива карточек: ${err}`)
-      );
+      api
+        .getInitialCards()
+        .then((data) => {
+          setCards(data);
+        })
+        .catch((err) =>
+          console.log(`При загрузке первоначального массива карточек: ${err}`)
+        );
     }
   }, [isLoggedIn]);
 
@@ -65,13 +65,13 @@ function App() {
         .then((res) => {
           setEmail(res.data.email);
           setLoggedIn(true);
-          history.push("/");
+          navigate("/");
         })
         .catch(() => {
           localStorage.removeItem("jwt");
         });
     }
-  }, [history]);
+  }, []);
 
   const handleUpdateUser = (userUpdate) => {
     api
@@ -158,7 +158,7 @@ function App() {
   const onRegister = ({ email, password }) => {
     register(email, password)
       .then(() => {
-        history.push("/sign-in");
+        navigate("/sign-in");
         setTooltipStatus({
           text: "Вы успешно зарегистрировались",
           iconType: "success",
@@ -177,7 +177,7 @@ function App() {
       .then(() => {
         setLoggedIn(true);
         setEmail(email);
-        history.push("/");
+        navigate("/");
       })
       .catch(() => {
         setTooltipStatus({
@@ -190,7 +190,7 @@ function App() {
   const onSignOut = () => {
     localStorage.removeItem("jwt");
     setLoggedIn(false);
-    history.push("/sign-in");
+    navigate("/sign-in");
   };
 
   return (
@@ -199,75 +199,75 @@ function App() {
         <div className="page">
           <div className="page__container">
             <Header email={email} onSignOut={onSignOut} />
-            <Switch>
-              <ProtectedRoute
+            <Routes>
+              {/* <ProtectedRoute
                 exact
                 path="/"
                 loggedIn={isLoggedIn}
-              >
-                <Main
-                  cards={cards}
-                  onEditeProfile={handleEditProfileClick}
-                  onEditAvatar={handleEditAvatarClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onCardClick={handleCardClick}
-                  onCardLike={handleCardLike}
-                  selectedCard={selectedCard}
-                  onCardDelete={handleCardDeleteRequest}
-                />
+              > */}
+              <Route
+                path="/"
+                element={
+                  <Main
+                    cards={cards}
+                    onEditeProfile={handleEditProfileClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    selectedCard={selectedCard}
+                    onCardDelete={handleCardDeleteRequest}
+                  />
+                }
+              />
 
-                <PopupWithForm
-                  title="Вы уверены?"
-                  name="delete-card"
-                  isOpen={isDeleteCardPopupOpen}
-                  onClose={closeAllPopups}
-                  buttonText="Да"
-                  onSubmit={handleCardDelete}
-                ></PopupWithForm>
+              {/* </ProtectedRoute> */}
 
-                <EditProfilePopup
-                  isOpen={isEditProfilePopupOpen}
-                  onClose={closeAllPopups}
-                  onUpdateUser={handleUpdateUser}
-                />
+              <Route
+                path="/sign-up"
+                element={<Register onRegister={onRegister} />}
+              />
 
-                <AddPlacePopup
-                  onClose={closeAllPopups}
-                  isOpen={isAddPlacePopupOpen}
-                  onAddCard={handleAddPlaceSubmit}
-                ></AddPlacePopup>
+              <Route path="/sign-in" element={<Login onLogin={onLogin} />} />
 
-                <EditAvatarPopup
-                  isOpen={isEditAvatarPopupOpen}
-                  onClose={closeAllPopups}
-                  onUpdateAvatar={handleUpdateAvatar}
-                />
+              {/* <Route path="*">
+                {isLoggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />}
+              </Route> */}
+            </Routes>
+            {/* <PopupWithForm
+              title="Вы уверены?"
+              name="delete-card"
+              isOpen={isDeleteCardPopupOpen}
+              onClose={closeAllPopups}
+              buttonText="Да"
+              onSubmit={handleCardDelete}
+            ></PopupWithForm>
 
-                <ImagePopup
-                  selectedCard={selectedCard}
-                  onClose={closeAllPopups}
-                />
-              </ProtectedRoute>
+            <EditProfilePopup
+              isOpen={isEditProfilePopupOpen}
+              onClose={closeAllPopups}
+              onUpdateUser={handleUpdateUser}
+            />
 
-              <Route path="/sign-up">
-                <Register onRegister={onRegister} />
-              </Route>
+            <AddPlacePopup
+              onClose={closeAllPopups}
+              isOpen={isAddPlacePopupOpen}
+              onAddCard={handleAddPlaceSubmit}
+            ></AddPlacePopup>
 
-              <Route path="/sign-in">
-                <Login onLogin={onLogin} />
-              </Route>
+            <EditAvatarPopup
+              isOpen={isEditAvatarPopupOpen}
+              onClose={closeAllPopups}
+              onUpdateAvatar={handleUpdateAvatar}
+            />
 
-              <Route path="*">
-                {isLoggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
-              </Route>
-            </Switch>
-
+            <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
             <Footer />
             <InfoTooltip
               isOpen={!!tooltipStatus}
               onClose={closeAllPopups}
               status={tooltipStatus}
-            />
+            /> */}
           </div>
         </div>
       </div>
