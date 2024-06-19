@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import Card from "./Card";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
+  let currentUser
   const {
     onEditeProfile,
     onEditAvatar,
@@ -14,7 +14,6 @@ function Main(props) {
     onCardLike,
   } = props;
 
-  const currentUser = useContext(CurrentUserContext);
   const [isMouseEnterButton, setMouseEnterButton] = useState(false);
 
   const handleMouseEnter = () => {
@@ -29,7 +28,7 @@ function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__name">
-          <h1 className="profile__title">{currentUser.name}</h1>
+          <h1 className="profile__title">{currentUser?.name}</h1>
         </div>
 
         <button
@@ -39,13 +38,13 @@ function Main(props) {
           onClick={onEditeProfile}
         ></button>
 
-        <p className="profile__description">{currentUser.about}</p>
+        <p className="profile__description">{currentUser?.about}</p>
 
         <div
           className="profile__user-pic"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
-          style={{ backgroundImage: `url(${currentUser.avatar})` }}
+          style={{ backgroundImage: `url(${currentUser?.avatar})` }}
         >
           {isMouseEnterButton && (
             <button

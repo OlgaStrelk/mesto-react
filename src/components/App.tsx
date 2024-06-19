@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import "../index.css";
 import { api } from "../utils/API";
 import Header from "./Header";
@@ -36,6 +35,7 @@ function App() {
       api
         .getProfile()
         .then((data) => {
+          console.log(data)
           setCurrentUser(data);
         })
 
@@ -194,7 +194,6 @@ function App() {
   };
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
         <div className="page">
           <div className="page__container">
@@ -271,7 +270,6 @@ function App() {
           </div>
         </div>
       </div>
-    </CurrentUserContext.Provider>
   );
 }
 
