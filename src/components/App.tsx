@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction, SetStateAction } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import "../index.css";
-import { api } from "../utils/API";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -14,7 +13,7 @@ import Login from "./Login";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
-import { register, authorize, checkToken } from "../utils/AuthAPI";
+import { register, authorize, checkToken } from "../utils/Auth";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -32,10 +31,9 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      api
-        .getProfile()
+      getProfile()
         .then((data) => {
-          console.log(data)
+          console.log(data);
           setCurrentUser(data);
         })
 
@@ -47,8 +45,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      api
-        .getInitialCards()
+      getInitialCards()
         .then((data) => {
           setCards(data);
         })
@@ -62,7 +59,7 @@ function App() {
     const token = localStorage.getItem("jwt");
     if (token) {
       checkToken(token)
-        .then((res) => {
+        .then((res: { data: { email: SetStateAction<string> } }) => {
           setEmail(res.data.email);
           setLoggedIn(true);
           navigate("/");
@@ -73,9 +70,8 @@ function App() {
     }
   }, []);
 
-  const handleUpdateUser = (userUpdate) => {
-    api
-      .editProfile(userUpdate.name, userUpdate.about)
+  const handleUpdateUser = (userUpdate: { name: string; about: string }) => {
+    editProfile(userUpdate.name, userUpdate.about)
       .then((newData) => {
         setCurrentUser(newData);
       })
@@ -85,9 +81,9 @@ function App() {
       .then(() => closeAllPopups());
   };
 
-  const handleUpdateAvatar = ({ avatar }) => {
-    api
-      .changeUserPic(avatar)
+  const handleUpdateAvatar = ({ avatar }: { avatar: string
+  }) => {
+    changeUserPic(avatar)
       .then((newAvatar) => {
         setCurrentUser(newAvatar);
       })
@@ -97,9 +93,8 @@ function App() {
       .then(() => closeAllPopups());
   };
 
-  const handleAddPlaceSubmit = (name, link) => {
-    api
-      .addCard(name, link)
+  const handleAddPlaceSubmit = (name: string, link: string) => {
+    addCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards]);
       })
@@ -127,10 +122,12 @@ function App() {
     setTooltipStatus();
   };
 
-  const handleCardLike = (card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api
-      .changeLikeCardStatus(card._id, !isLiked)
+  const handleCardLike = (card: { likes: any[]; _id: string }) => {
+    const isLiked = card.likes.some(
+      (i: { _id: any }) => i._id === currentUser._id
+    );
+
+    changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
@@ -139,15 +136,15 @@ function App() {
       .catch((err) => console.log(`При изменении состояния лайка: ${err}`));
   };
 
-  const handleCardDeleteRequest = (card) => {
+  const handleCardDeleteRequest = (card: SetStateAction<null>) => {
     setCardDelete(card);
     setDeleteCardPopupOpen(true);
   };
 
-  const handleCardDelete = (e) => {
+  const handleCardDelete = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    api
-      .deleteCard(cardDelete._id)
+
+    deleteCard(cardDelete._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== cardDelete._id));
         setDeleteCardPopupOpen(false);
@@ -194,46 +191,46 @@ function App() {
   };
 
   return (
-      <div className="App">
-        <div className="page">
-          <div className="page__container">
-            <Header email={email} onSignOut={onSignOut} />
-            <Routes>
-              {/* <ProtectedRoute
+    <div className="App">
+      <div className="page">
+        <div className="page__container">
+          <Header email={email} onSignOut={onSignOut} />
+          <Routes>
+            {/* <ProtectedRoute
                 exact
                 path="/"
                 loggedIn={isLoggedIn}
               > */}
-              <Route
-                path="/"
-                element={
-                  <Main
-                    cards={cards}
-                    onEditeProfile={handleEditProfileClick}
-                    onEditAvatar={handleEditAvatarClick}
-                    onAddPlace={handleAddPlaceClick}
-                    onCardClick={handleCardClick}
-                    onCardLike={handleCardLike}
-                    selectedCard={selectedCard}
-                    onCardDelete={handleCardDeleteRequest}
-                  />
-                }
-              />
+            <Route
+              path="/"
+              element={
+                <Main
+                  cards={cards}
+                  onEditeProfile={handleEditProfileClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  selectedCard={selectedCard}
+                  onCardDelete={handleCardDeleteRequest}
+                />
+              }
+            />
 
-              {/* </ProtectedRoute> */}
+            {/* </ProtectedRoute> */}
 
-              <Route
-                path="/sign-up"
-                element={<Register onRegister={onRegister} />}
-              />
+            <Route
+              path="/sign-up"
+              element={<Register onRegister={onRegister} />}
+            />
 
-              <Route path="/sign-in" element={<Login onLogin={onLogin} />} />
+            <Route path="/sign-in" element={<Login onLogin={onLogin} />} />
 
-              {/* <Route path="*">
+            {/* <Route path="*">
                 {isLoggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />}
               </Route> */}
-            </Routes>
-            {/* <PopupWithForm
+          </Routes>
+          {/* <PopupWithForm
               title="Вы уверены?"
               name="delete-card"
               isOpen={isDeleteCardPopupOpen}
@@ -267,9 +264,9 @@ function App() {
               onClose={closeAllPopups}
               status={tooltipStatus}
             /> */}
-          </div>
         </div>
       </div>
+    </div>
   );
 }
 
