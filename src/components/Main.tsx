@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import Card from "./Card";
 
-function Main(props) {
+const Main: FC =(props)=> {
   let currentUser
   const {
     onEditeProfile,

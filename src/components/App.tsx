@@ -1,4 +1,4 @@
-import { useState, useEffect, SetStateAction, SetStateAction } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import "../index.css";
 import Header from "./Header";
@@ -13,7 +13,8 @@ import Login from "./Login";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute";
-import { register, authorize, checkToken } from "../utils/Auth";
+import { checkToken, register, authorize } from "../utils/authApi";
+import { getProfile, getInitialCards, editProfile, changeUserPic, addCard, changeLikeCardStatus, deleteCard } from "../utils/api";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});

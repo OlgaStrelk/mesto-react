@@ -1,19 +1,21 @@
-const getProfile = () => {
-  return fetch(`${baseUrl}/users/me`, {
-    headers: headers,
+import { BASE_URL, HEADERS_WITH_AUTH } from "./consts";
+
+export const getProfile = () => {
+  return fetch(`${BASE_URL}/users/me`, {
+    headers: HEADERS_WITH_AUTH,
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
 
-const getInitialCards = () => {
-  return fetch(`${baseUrl}/cards`, {
-    headers: headers,
+export const getInitialCards = () => {
+  return fetch(`${BASE_URL}/cards`, {
+    headers: HEADERS_WITH_AUTH,
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
 
-const editProfile = (name: string, about: string) => {
-  return fetch(`${baseUrl}/users/me`, {
+export const editProfile = (name: string, about: string) => {
+  return fetch(`${BASE_URL}/users/me`, {
     method: "PATCH",
-    headers: headers,
+    headers: HEADERS_WITH_AUTH,
     body: JSON.stringify({
       name,
       about,
@@ -21,10 +23,10 @@ const editProfile = (name: string, about: string) => {
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
 
-const addCard = (name: string, link: string) => {
-  return fetch(`${baseUrl}/cards`, {
+export const addCard = (name: string, link: string) => {
+  return fetch(`${BASE_URL}/cards`, {
     method: "POST",
-    headers: headers,
+    headers: HEADERS_WITH_AUTH,
     body: JSON.stringify({
       name,
       link,
@@ -32,31 +34,26 @@ const addCard = (name: string, link: string) => {
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
 
-const deleteCard = (id: string) => {
-  return fetch(`${baseUrl}/cards/${id}`, {
+export const deleteCard = (id: string) => {
+  return fetch(`${BASE_URL}/cards/${id}`, {
     method: "DELETE",
-    headers: headers,
+    headers: HEADERS_WITH_AUTH,
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
-const changeLikeCardStatus = (cardID: string, like: boolean) => {
-  return fetch(`${baseUrl}/cards/${cardID}/likes`, {
+export const changeLikeCardStatus = (cardID: string, like: boolean) => {
+  return fetch(`${BASE_URL}/cards/${cardID}/likes`, {
     method: like ? "PUT" : "DELETE",
-    headers: headers,
+    headers: HEADERS_WITH_AUTH,
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
 
-const changeUserPic = (avatar: string) => {
-  return fetch(`${baseUrl}/users/me/avatar`, {
+export const changeUserPic = (avatar: string) => {
+  return fetch(`${BASE_URL}/users/me/avatar`, {
     method: "PATCH",
-    headers: headers,
+    headers: HEADERS_WITH_AUTH,
     body: JSON.stringify({
       avatar,
     }),
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };
 
-const baseUrl = "https://mesto.nomoreparties.co/v1/cohort-39";
-const headers = {
-  authorization: "78099c83-b4f6-4327-beb7-a0fa8f52d200",
-  "Content-Type": "application/json",
-};

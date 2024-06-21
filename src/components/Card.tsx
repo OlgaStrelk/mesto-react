@@ -3,13 +3,13 @@ import React from "react";
 function Card(props) {
   let currentUser
   const { card } = props;
-  const isOwn = card.owner._id === currentUser._id;
+  const isOwn = card.owner._id === currentUser?._id;
 
   const cardDeleteButtonClassName = `${
     isOwn ? "cards__remove-button" : "cards__remove-button_hidden"
   }`;
 
-  const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  const isLiked = card.likes.some((i) => i._id === currentUser?._id);
 
   const cardLikeButtonClassName = ` ${
     !isLiked ? "cards__like" : "cards__like cards__like_is-active"
